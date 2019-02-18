@@ -7,8 +7,7 @@ from time import sleep
 
 my_bot_token = '<BOT TOKEN>'	
 	
-dynamodb = boto3.resource('dynamodb', region_name='us-west-2' ,  aws_access_key_id ='<ACCESS KEY>',
-         aws_secret_access_key ='<SECRET KEY>')
+dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 
 	
 def getHumidityTempAll():
@@ -37,7 +36,6 @@ def getCarOneCount():
 		response = table.query(
 			KeyConditionExpression=Key('camera_id').eq('1'),ScanIndexForward=False , Limit=10)
 		items = response['Items']
-		#records = data_to_json(items)
 		return items
 
 	except:
@@ -72,13 +70,6 @@ def getAllCarCount():
 		response = table.query(
 			KeyConditionExpression=Key('camera_id').eq('2'),ScanIndexForward=False , Limit=12)
 		items = response['Items']
-		#n=10 # limit to last 10 items
-		#data = items[:n]
-		#data_reversed = data[::-1]
-		#print("Successfully connected to database!")
-		#print(items)
-		#print(data)
-		#print(data_reversed)
 		return items
 	except:
 		import sys
@@ -129,8 +120,8 @@ def respondToMsg(msg):
 	command = msg['text']
 	CarOneCountLevel = ''
 	CarTwoCountLevel = ''
-	countCarOne = getLatestRecordCarOne()
-	countCarTwo = getLatestRecordCarTwo()
+	countCarOne = int(getLatestRecordCarOne())
+	countCarTwo = int(getLatestRecordCarTwo())
 	if command == '/status':		
 		tempList = getHumidityTempAll()
 		record = []
@@ -168,5 +159,5 @@ def respondToMsg(msg):
 		bot.sendMessage(chat_id , message)
 
 		
-#bot = telepot.Bot(my_bot_token)
-#bot.message_loop(respondToMsg)
+bot = telepot.Bot(my_bot_token)
+bot.message_loop(respondToMsg)
