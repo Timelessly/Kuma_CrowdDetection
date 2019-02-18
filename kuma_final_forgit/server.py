@@ -37,10 +37,6 @@ def customCallback(client, userdata, message):
 	print("from topic: ")
 	print(message.topic)
 	print("--------------\n\n")
-	#print(message.payload["camera_id"])
-	#dataReal[message.payload.camera_id] = message.payload["camera_id"]
-	#dataReal[message.payload["camera_id"]] = message.payload
-	#dataReal = {'getAllTempHum': data_to_json(message.payload)}
 	print("bottom")
 	temp = json.loads(message.payload)
 	print(temp)
@@ -76,8 +72,8 @@ def LCD_publish():
 	print("inside method")
 	result = "Display is updated"
 	if request.method == 'POST' or request.method == 'GET':
-		countCarOne = dynamodb.getLatestRecordCarOne()
-		countCarTwo = dynamodb.getLatestRecordCarTwo()
+		countCarOne = int(dynamodb.getLatestRecordCarOne())
+		countCarTwo = int(dynamodb.getLatestRecordCarTwo())
         if countCarOne > countCarTwo:
             message = {"message":"1"}
         elif countCarOne == countCarTwo:
