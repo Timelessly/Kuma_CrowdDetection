@@ -7,8 +7,7 @@ from time import sleep
 
 my_bot_token = '<BOT TOKEN>'	
 	
-dynamodb = boto3.resource('dynamodb', region_name='us-west-2' ,  aws_access_key_id ='<ACCESS KEY>',
-         aws_secret_access_key ='<SECRET KEY>')
+dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 
 	
 def getHumidityTempAll():
@@ -168,5 +167,5 @@ def respondToMsg(msg):
 		bot.sendMessage(chat_id , message)
 
 		
-#bot = telepot.Bot(my_bot_token)
-#bot.message_loop(respondToMsg)
+bot = telepot.Bot(my_bot_token)
+bot.message_loop(respondToMsg)
